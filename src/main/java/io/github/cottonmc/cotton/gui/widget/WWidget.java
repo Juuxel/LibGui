@@ -233,4 +233,18 @@ public class WWidget {
 	}
 	
 	public void tick() {}
+
+	/**
+	 * Called when a widget is hidden.
+	 * For example, {@link WItemSlot} uses this to hide the slot peers.
+	 */
+	public void onHidden() {
+	}
+
+	/**
+	 * Called when a widget is shown after being hidden.
+	 * This method can be used to restore the original state before hiding.
+	 */
+	public void onShown() {
+	}
 }

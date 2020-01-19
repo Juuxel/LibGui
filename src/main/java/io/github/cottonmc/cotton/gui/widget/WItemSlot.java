@@ -14,7 +14,7 @@ import net.minecraft.container.Slot;
 import net.minecraft.inventory.Inventory;
 
 public class WItemSlot extends WWidget {
-	private final List<Slot> peers = Lists.newArrayList();
+	private final List<ValidatedSlot> peers = Lists.newArrayList();
 	private BackgroundPainter backgroundPainter;
 	private Inventory inventory;
 	private int startIndex = 0;
@@ -126,6 +126,20 @@ public class WItemSlot extends WWidget {
 					}
 				}
 			}
+		}
+	}
+
+	@Override
+	public void onShown() {
+		for (ValidatedSlot peer : peers) {
+			peer.show();
+		}
+	}
+
+	@Override
+	public void onHidden() {
+		for (ValidatedSlot peer : peers) {
+			peer.hide();
 		}
 	}
 }

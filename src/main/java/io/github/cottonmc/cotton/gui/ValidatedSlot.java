@@ -1,5 +1,6 @@
 package io.github.cottonmc.cotton.gui;
 
+import io.github.cottonmc.cotton.gui.impl.mixin.SlotAccessor;
 import net.minecraft.container.Slot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -7,11 +8,14 @@ import net.minecraft.item.ItemStack;
 
 public class ValidatedSlot extends Slot {
 	private final int slotNumber;
+	private final int originalX, originalY;
 	
 	public ValidatedSlot(Inventory inventoryIn, int index, int xPosition, int yPosition) {
 		super(inventoryIn, index, xPosition, yPosition);
 		if (inventoryIn==null) throw new IllegalArgumentException("Can't make an itemslot from a null inventory!");
 		this.slotNumber = index;
+		this.originalX = xPosition;
+		this.originalY = yPosition;
 	}
 	
 	@Override
@@ -42,5 +46,12 @@ public class ValidatedSlot extends Slot {
 	
 	public int getInventoryIndex() {
 		return slotNumber;
+	}
+
+	public void hide() {
+		((SlotAccessor) this).setYPosition(-100);
+	}
+	public void show() {
+		((SlotAccessor) this).setYPosition(originalY);
 	}
 }

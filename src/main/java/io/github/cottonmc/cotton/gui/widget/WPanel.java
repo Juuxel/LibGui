@@ -166,4 +166,18 @@ public abstract class WPanel extends WWidget {
 	public void tick() {
 		for(WWidget child : children) child.tick();
 	}
+
+	@Override
+	public void onShown() {
+		for (WWidget child : children) {
+			child.onShown();
+		}
+	}
+
+	@Override
+	public void onHidden() {
+		for (WWidget child : children) {
+			child.onHidden();
+		}
+	}
 }

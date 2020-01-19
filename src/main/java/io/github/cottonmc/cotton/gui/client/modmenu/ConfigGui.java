@@ -3,12 +3,10 @@ package io.github.cottonmc.cotton.gui.client.modmenu;
 import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
 import io.github.cottonmc.cotton.gui.client.LibGuiClient;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.WButton;
-import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WTextField;
-import io.github.cottonmc.cotton.gui.widget.WToggleButton;
+import io.github.cottonmc.cotton.gui.widget.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 public class ConfigGui extends LightweightGuiDescription {
@@ -26,10 +24,12 @@ public class ConfigGui extends LightweightGuiDescription {
 		};
 		darkmodeButton.setToggle(LibGuiClient.config.darkMode);
 		root.add(darkmodeButton, 0, 2, 6, 1);
-		
+
 		WTextField testField = new WTextField();
 		testField.setSuggestion("test");
-		root.add(testField, 0, 3, 4, 1);
+		WDropdown dropdown = new WDropdown(new LiteralText("test text field"), testField);
+		dropdown.setBackgroundPainter(BackgroundPainter.VANILLA);
+		root.add(dropdown, 0, 3, 4, 4);
 
 		/*
 		WSlider verticalSlider = new WSlider(-100, 100, Axis.VERTICAL);
