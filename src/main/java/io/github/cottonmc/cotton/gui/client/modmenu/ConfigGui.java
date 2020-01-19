@@ -7,9 +7,21 @@ import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.WToggleButton;
+import io.github.cottonmc.cotton.gui.widget.data.Alignment;
+import io.github.cottonmc.cotton.gui.wrapper.LibGuiWidget;
+import io.github.cottonmc.cotton.gui.wrapper.WLibGuiWidget;
+import io.github.cottonmc.cotton.gui.wrapper.WSpinneryWidget;
+import io.github.cottonmc.cotton.gui.wrapper.WVanillaWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
+import spinnery.widget.WAnchor;
+import spinnery.widget.WDropdown;
+import spinnery.widget.WInterface;
 
 public class ConfigGui extends LightweightGuiDescription {
 
@@ -30,6 +42,15 @@ public class ConfigGui extends LightweightGuiDescription {
 		WTextField testField = new WTextField();
 		testField.setSuggestion("test");
 		root.add(testField, 0, 3, 4, 1);
+		WInterface spinneryBase = new WInterface(0, 0, 0, 0, 0);
+		spinnery.widget.WButton spinneryButton = new spinnery.widget.WButton(WAnchor.MC_ORIGIN, 8, 8, 0, 4 * 18, 1 * 18, spinneryBase);
+		spinneryButton.setLabel("Spinnery");
+		//ButtonWidget testButton = new ButtonWidget(0, 0, 4 * 18, 20, "Vanilla button", (button) -> {});
+		//WVanillaWidget<ButtonWidget> buttonWrapper = new WVanillaWidget<>(testButton);
+		WVanillaWidget<LibGuiWidget> buttonWrapper = new WVanillaWidget<>(new LibGuiWidget(0, 0, 32, 32, new WKirbSprite()));
+		WLibGuiWidget wrapped = new WLibGuiWidget(WAnchor.MC_ORIGIN, 8, 28, 0, buttonWrapper, spinneryBase);
+		spinneryBase.add(spinneryButton, wrapped);
+		root.add(new WSpinneryWidget(spinneryBase), 0, 7, 7, 3);
 
 		/*
 		WSlider verticalSlider = new WSlider(-100, 100, Axis.VERTICAL);
@@ -54,7 +75,7 @@ public class ConfigGui extends LightweightGuiDescription {
 		root.add(doneButton, 0, 5, 3, 1);
 		
 		root.setBackgroundPainter(BackgroundPainter.VANILLA);
-		root.setSize(7*18, 6*18);
+		root.setSize(7*18, 10*18);
 		
 		root.validate(this);
 	}

@@ -180,7 +180,7 @@ public class WWidget {
 		if (host!=null) {
 			host.requestFocus(this);
 		} else {
-			System.out.println("host is null");
+			System.out.println("host of " + this + " is null");
 		}
 	}
 	
