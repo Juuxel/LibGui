@@ -91,6 +91,11 @@ public class WLibGuiWidget extends spinnery.widget.WWidget {
 	}
 
 	@Override
+	public boolean isWithinBounds(int mouseX, int mouseY) {
+		return widget.isWithinBounds(mouseX - getX(), mouseY - getY());
+	}
+
+	@Override
 	public void draw() {
 		widget.paintBackground(
 				getX(), getY(),

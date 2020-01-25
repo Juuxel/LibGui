@@ -38,12 +38,14 @@ public class ConfigGui extends LightweightGuiDescription {
 		testField.setSuggestion("test");
 		root.add(testField, 0, 3, 4, 1);
 		WBetterInterface spinneryBase = new WBetterInterface(WPosition.of(WType.FREE, 0, 0, 0), WSize.of(0, 0));
-		spinneryBase.setBackgroundPainter(() -> BackgroundPainter.createColorful(0xFF_FF0000));
+		spinneryBase.setBackgroundPainter(() -> BackgroundPainter.VANILLA_9PATCH);
 		spinnery.widget.WButton spinneryButton = new spinnery.widget.WButton(WPosition.of(WType.ANCHORED, 8, 8, 0, spinneryBase), WSize.of(4 * 18, 1 * 18), spinneryBase);
 		spinneryButton.setLabel(new LiteralText("Spinnery"));
 		//ButtonWidget testButton = new ButtonWidget(0, 0, 4 * 18, 20, "Vanilla button", (button) -> {});
 		//WVanillaWidget<ButtonWidget> buttonWrapper = new WVanillaWidget<>(testButton);
-		WVanillaWidget<LibGuiWidget> buttonWrapper = new WVanillaWidget<>(new LibGuiWidget(0, 0, 32, 32, new WKirbSprite()));
+		//WVanillaWidget<LibGuiWidget> buttonWrapper = new WVanillaWidget<>(new LibGuiWidget(0, 0, 32, 32, new WKirbSprite()));
+		WButton buttonWrapper = new WButton(new LiteralText("LibGui"));
+		buttonWrapper.setSize(2*18, 18);
 		WLibGuiWidget wrapped = new WLibGuiWidget(WPosition.of(WType.ANCHORED, 8, 28, 0, spinneryBase), buttonWrapper, spinneryBase);
 		spinneryBase.add(spinneryButton, wrapped);
 		root.add(new WSpinneryWidget(spinneryBase), 0, 7, 7, 3);

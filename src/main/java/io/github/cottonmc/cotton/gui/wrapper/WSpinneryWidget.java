@@ -3,6 +3,7 @@ package io.github.cottonmc.cotton.gui.wrapper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import spinnery.widget.WInterface;
+import spinnery.widget.WInterfaceHolder;
 import spinnery.widget.WSize;
 
 /**
@@ -10,9 +11,12 @@ import spinnery.widget.WSize;
  */
 public class WSpinneryWidget extends WWidget {
 	private final WInterface widget;
+	private final WInterfaceHolder holder;
 
 	public WSpinneryWidget(WInterface widget) {
 		this.widget = widget;
+		this.holder = new WInterfaceHolder();
+		holder.add(widget);
 	}
 
 	@Override
@@ -42,48 +46,34 @@ public class WSpinneryWidget extends WWidget {
 
 	@Override
 	public void tick() {
-		widget.tick();
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.tick();
-		}
+		holder.tick();
 	}
 
 	@Override
 	public WWidget onMouseDown(int x, int y, int button) {
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.onMouseClicked(x, y, button);
-		}
+		holder.onMouseClicked(x, y, button);
 		return this;
 	}
 
 	@Override
 	public void onMouseMove(int x, int y) {
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.scanFocus(x, y);
-			child.onMouseMoved(x, y);
-		}
+		holder.mouseMoved(x, y);
 	}
 
 	@Override
 	public void onMouseDrag(int x, int y, int button, double deltaX, double deltaY) {
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.onMouseDragged(x, y, button, deltaX, deltaY);
-		}
+		holder.onMouseDragged(x, y, button, (int) deltaX, (int) deltaY);
 	}
 
 	@Override
 	public WWidget onMouseUp(int x, int y, int button) {
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.onMouseReleased(x, y, button);
-		}
+		holder.onMouseReleased(x, y, button);
 		return this;
 	}
 
 	@Override
 	public void onMouseScroll(int x, int y, double amount) {
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.onMouseScrolled(x, y, amount);
-		}
+		holder.onMouseScrolled(x, y, amount);
 	}
 
 	@Override
@@ -93,23 +83,17 @@ public class WSpinneryWidget extends WWidget {
 
 	@Override
 	public void onCharTyped(char ch) {
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.onCharTyped(ch);
-		}
+		holder.onCharTyped(ch, 0);
 	}
 
 	@Override
 	public void onKeyPressed(int ch, int key, int modifiers) {
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.onKeyPressed(key, ch, modifiers);
-		}
+		holder.keyPressed(key, ch, modifiers);
 	}
 
 	@Override
 	public void onKeyReleased(int ch, int key, int modifiers) {
-		for (spinnery.widget.WWidget child : widget.getWidgets()) {
-			child.onKeyReleased(key);
-		}
+		holder.onKeyReleased(ch, key, modifiers);
 	}
 
 	@Override
