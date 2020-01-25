@@ -3,6 +3,7 @@ package io.github.cottonmc.cotton.gui.wrapper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import spinnery.widget.WInterface;
+import spinnery.widget.WSize;
 
 /**
  * A Spinnery -> LibGui wrapper.
@@ -26,23 +27,25 @@ public class WSpinneryWidget extends WWidget {
 
 	@Override
 	public int getWidth() {
-		return (int) widget.getSizeX();
+		return widget.getWidth();
 	}
 
 	@Override
 	public int getHeight() {
-		return (int) widget.getSizeY();
+		return widget.getHeight();
 	}
 
 	@Override
 	public void setSize(int x, int y) {
-		widget.setSizeX(x);
-		widget.setSizeY(y);
+		widget.setSize(WSize.of(x, y));
 	}
 
 	@Override
 	public void tick() {
 		widget.tick();
+		for (spinnery.widget.WWidget child : widget.getWidgets()) {
+			child.tick();
+		}
 	}
 
 	@Override

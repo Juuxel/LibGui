@@ -1,8 +1,9 @@
 package io.github.cottonmc.cotton.gui.wrapper;
 
 import io.github.cottonmc.cotton.gui.widget.WWidget;
-import spinnery.widget.WAnchor;
 import spinnery.widget.WInterface;
+import spinnery.widget.WPosition;
+import spinnery.widget.WSize;
 
 /**
  * A LibGui -> Spinnery wrapper.
@@ -10,40 +11,19 @@ import spinnery.widget.WInterface;
 public class WLibGuiWidget extends spinnery.widget.WWidget {
 	private final WWidget widget;
 
-	public WLibGuiWidget(WAnchor anchor, int positionX, int positionY, int positionZ, WWidget widget, WInterface linkedPanel) {
-		this.linkedPanel = linkedPanel;
+	public WLibGuiWidget(WPosition position, WWidget widget, WInterface linkedInterface) {
+		this.linkedInterface = linkedInterface;
 		this.widget = widget;
-		setAnchor(anchor);
 
-		setAnchoredPositionX(positionX);
-		setAnchoredPositionY(positionY);
-		setPositionZ(positionZ);
-		setTheme("default");
-
-		setSizeX(widget.getWidth());
-		setSizeY(widget.getHeight());
+		setPosition(position);
+		setTheme("light");
+		setSize(WSize.of(widget.getWidth(), widget.getHeight()));
 	}
 
 	@Override
-	public double getSizeX() {
-		return widget.getWidth();
-	}
-
-	@Override
-	public double getSizeY() {
-		return widget.getHeight();
-	}
-
-	@Override
-	public void setSizeX(double sizeX) {
-		super.setSizeX(sizeX);
-		widget.setSize((int) sizeX, widget.getHeight());
-	}
-
-	@Override
-	public void setSizeY(double sizeY) {
-		super.setSizeY(sizeY);
-		widget.setSize(widget.getWidth(), (int) sizeY);
+	public void setSize(WSize size) {
+		super.setSize(size);
+		widget.setSize(size.getX(), size.getY());
 	}
 
 	@Override
@@ -67,41 +47,41 @@ public class WLibGuiWidget extends spinnery.widget.WWidget {
 	@Override
 	public void onMouseReleased(double mouseX, double mouseY, int mouseButton) {
 		super.onMouseReleased(mouseX, mouseY, mouseButton);
-		int mx = (int) (mouseX - positionX);
-		int my = (int) (mouseY - positionY);
+		int mx = (int) (mouseX - getX());
+		int my = (int) (mouseY - getY());
 		widget.onMouseUp(mx, my, mouseButton);
 		widget.onClick(mx, my, mouseButton);
 	}
 
 	@Override
-	public void onMouseClicked(double mouseX, double mouseY, int mouseButton) {
+	public void onMouseClicked(int mouseX, int mouseY, int mouseButton) {
 		super.onMouseClicked(mouseX, mouseY, mouseButton);
-		int mx = (int) (mouseX - positionX);
-		int my = (int) (mouseY - positionY);
+		int mx = (int) (mouseX - getX());
+		int my = (int) (mouseY - getY());
 		widget.onMouseDown(mx, my, mouseButton);
 	}
 
 	@Override
-	public void onMouseDragged(double mouseX, double mouseY, int mouseButton, double dragOffsetX, double dragOffsetY) {
+	public void onMouseDragged(int mouseX, int mouseY, int mouseButton, double dragOffsetX, double dragOffsetY) {
 		super.onMouseDragged(mouseX, mouseY, mouseButton, dragOffsetX, dragOffsetY);
-		int mx = (int) (mouseX - positionX);
-		int my = (int) (mouseY - positionY);
+		int mx = (int) (mouseX - getX());
+		int my = (int) (mouseY - getY());
 		widget.onMouseDrag(mx, my, mouseButton, dragOffsetX, dragOffsetY);
 	}
 
 	@Override
 	public void onMouseMoved(double mouseX, double mouseY) {
 		super.onMouseMoved(mouseX, mouseY);
-		int mx = (int) (mouseX - positionX);
-		int my = (int) (mouseY - positionY);
+		int mx = (int) (mouseX - getX());
+		int my = (int) (mouseY - getY());
 		widget.onMouseMove(mx, my);
 	}
 
 	@Override
-	public void onMouseScrolled(double mouseX, double mouseY, double mouseZ) {
+	public void onMouseScrolled(int mouseX, int mouseY, double mouseZ) {
 		super.onMouseScrolled(mouseX, mouseY, mouseZ);
-		int mx = (int) (mouseX - positionX);
-		int my = (int) (mouseY - positionY);
+		int mx = (int) (mouseX - getX());
+		int my = (int) (mouseY - getY());
 		widget.onMouseScroll(mx, my, mouseZ);
 	}
 
@@ -112,6 +92,10 @@ public class WLibGuiWidget extends spinnery.widget.WWidget {
 
 	@Override
 	public void draw() {
-		widget.paintBackground((int) getPositionX(), (int) getPositionY(), -1, -1);
+		widget.paintBackground(
+				getX(), getY(),
+				hasFocus ? getSize().getX() / 2 : -1,
+				hasFocus ? getSize().getY() / 2 : -1
+		);
 	}
 }
