@@ -7,6 +7,8 @@ import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WPlayerInvPanel;
 import net.minecraft.container.BlockContext;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
 
 public class TestContainer extends CottonCraftingController {
@@ -15,8 +17,10 @@ public class TestContainer extends CottonCraftingController {
 		super(null, syncId, playerInventory, getBlockInventory(context), null);
 		
 		WGridPanel root = (WGridPanel)this.getRootPanel();
-		
-		root.add(WItemSlot.of(blockInventory, 0, 4, 1), 0, 1);
+
+		WItemSlot slots = WItemSlot.of(blockInventory, 0, 4, 1);
+		slots.setIcon(1, new ItemStack(Items.APPLE));
+		root.add(slots, 0, 1);
 		
 		WButton button = new WButton(new LiteralText("Test Button"));
 		root.add(button, 0, 3, 5, 1);

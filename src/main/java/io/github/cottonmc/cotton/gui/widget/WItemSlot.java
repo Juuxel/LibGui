@@ -1,17 +1,22 @@
 package io.github.cottonmc.cotton.gui.widget;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.cottonmc.cotton.gui.GuiDescription;
 import io.github.cottonmc.cotton.gui.ValidatedSlot;
 import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.container.Slot;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
 
 public class WItemSlot extends WWidget {
 	private final List<Slot> peers = Lists.newArrayList();
@@ -21,6 +26,7 @@ public class WItemSlot extends WWidget {
 	private int slotsWide = 1;
 	private int slotsHigh = 1;
 	private boolean big = false;
+	private ItemStack[] icons = new ItemStack[0];
 	
 	public WItemSlot(Inventory inventory, int startIndex, int slotsWide, int slotsHigh, boolean big, boolean ltr) {
 		this.inventory = inventory;
@@ -84,6 +90,15 @@ public class WItemSlot extends WWidget {
 	public boolean isBigSlot() {
 		return big;
 	}
+
+	public void setIcon(int index, ItemStack icon) {
+		// Resize array if needed
+		if (icons.length <= index) {
+			icons = Arrays.copyOf(icons, index + 1);
+		}
+
+		icons[index] = icon;
+	}
 	
 	@Override
 	public void createPeers(GuiDescription c) {
@@ -125,6 +140,27 @@ public class WItemSlot extends WWidget {
 								lo, bg, hi);
 					}
 				}
+			}
+		}
+
+		MinecraftClient mc = MinecraftClient.getInstance();
+		ItemRenderer itemRenderer = mc.getItemRenderer();
+
+		int index = 0;
+		for (int iy = 0; iy < slotsHigh; iy++) {
+			for (int ix = 0; ix < slotsWide; ix++) {
+				if (inventory.getInvStack(index).isEmpty() && icons.length >= index + 1 && icons[index] != null) {
+					ItemStack icon = icons[index];
+					RenderSystem.pushMatrix();
+					RenderSystem.enableDepthTest();
+
+					itemRenderer.zOffset = 100; // Vanilla does when an item is rendered.
+					itemRenderer.renderGuiItem(mc.player, icon, x + ix*18, y + iy*18);
+					itemRenderer.zOffset = 0;
+
+					RenderSystem.popMatrix();
+				}
+				index++;
 			}
 		}
 	}
