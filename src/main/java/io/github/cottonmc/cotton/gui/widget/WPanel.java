@@ -155,15 +155,6 @@ public abstract class WPanel extends WWidget {
 			child.paintBackground(x + child.getX(), y + child.getY(), mouseX-child.getX(), mouseY-child.getY());
 		}
 	}
-
-	@Environment(EnvType.CLIENT)
-	@Override
-	@Deprecated
-	public void paintForeground(int x, int y, int mouseX, int mouseY) {
-		for(WWidget child : children) {
-			child.paintForeground(x + child.getX(), y + child.getY(), mouseX, mouseY);
-		}
-	}
 	
 	@Override
 	public void tick() {

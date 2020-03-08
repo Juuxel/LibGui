@@ -6,18 +6,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
 public class WClippedPanel extends WPanel {
-	@Deprecated
-	protected Identifier mask;
-
-	/**
-	 * @deprecated {@code WClippedPanel} does not support clipping masks anymore.
-	 */
-	@Deprecated
-	public WClippedPanel setClippingMask(Identifier mask) {
-		this.mask = mask;
-		return this;
-	}
-	
 	@Override
 	public void paintBackground(int x, int y, int mouseX, int mouseY) {
 		if (getBackgroundPainter()!=null) getBackgroundPainter().paintBackground(x, y, this);

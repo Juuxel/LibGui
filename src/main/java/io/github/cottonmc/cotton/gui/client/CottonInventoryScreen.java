@@ -212,8 +212,6 @@ public class CottonInventoryScreen<T extends CottonCraftingController> extends C
 		if (description!=null) {
 			WPanel root = description.getRootPanel();
 			if (root!=null) {
-				root.paintForeground(x, y, mouseX, mouseY);
-				
 				WWidget hitChild = root.hit(mouseX-x, mouseY-y);
 				if (hitChild!=null) hitChild.renderTooltip(x, y, mouseX-x, mouseY-y);
 			}

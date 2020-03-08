@@ -53,22 +53,6 @@ public class WToggleButton extends WWidget {
 		this.label = label;
 	}
 
-	/**
-	 * @deprecated Use {@link #WToggleButton(Identifier, Identifier)} instead.
-	 */
-	@Deprecated
-	public WToggleButton(Identifier onImage, Identifier offImage, int width, int height) {
-		this(onImage, offImage);
-	}
-
-	/**
-	 * @deprecated Use {@link #WToggleButton(Identifier, Identifier, Text)} instead.
-	 */
-	@Deprecated
-	public WToggleButton(Text label, Identifier onImage, Identifier offImage, int width, int height) {
-		this(onImage, offImage, label);
-	}
-
 	@Environment(EnvType.CLIENT)
 	@Override
 	public void paintBackground(int x, int y) {
@@ -101,17 +85,12 @@ public class WToggleButton extends WWidget {
 		}
 	}
 
-	public boolean getToggle() { return this.isOn; }
-	public void setToggle(boolean on) { this.isOn = on; }
+	public boolean isOn() {
+		return this.isOn;
+	}
 
-	/**
-	 * Set on toggle handler
-	 *
-	 * @deprecated Use {@link #setOnToggle(Consumer)}
-	 */
-	@Deprecated
-	public void setOnToggle(Runnable r) {
-		this.onToggle = on -> r.run();
+	public void setOn(boolean on) {
+		this.isOn = on;
 	}
 
 	@Nullable
@@ -132,14 +111,6 @@ public class WToggleButton extends WWidget {
 	public WToggleButton setLabel(@Nullable Text label) {
 		this.label = label;
 		return this;
-	}
-
-	/**
-	 * @deprecated Use {@link #setColor} instead.
-	 */
-	@Deprecated
-	public WToggleButton color(int light, int dark) {
-		return setColor(light, dark);
 	}
 
 	public WToggleButton setColor(int light, int dark) {

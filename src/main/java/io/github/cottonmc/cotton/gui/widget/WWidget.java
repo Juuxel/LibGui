@@ -209,14 +209,6 @@ public class WWidget {
 	public void paintBackground(int x, int y) {
 	}
 	
-	@Deprecated
-	@Environment(EnvType.CLIENT)
-	public void paintForeground(int x, int y, int mouseX, int mouseY) {
-		//if (mouseX >= x && mouseX < x+getWidth() && mouseY >= y && mouseY < y+getHeight()) {
-		//	renderTooltip(mouseX, mouseY);
-		//}
-	}
-	
 	public boolean isWithinBounds(int x, int y) {
 		return x>=0 && y>=0 && x<this.width && y<this.height;
 	}

@@ -36,14 +36,6 @@ public class WListPanel<D, W extends WWidget> extends WClippedPanel {
 		this.configurator = configurator;
 		scrollBar.setMaxValue(data.size());
 	}
-
-	/**
-	 * @deprecated Use {@link #WListPanel(List, Supplier, BiConsumer)} instead.
-	 */
-	@Deprecated
-	public WListPanel(List<D> data, Class<W> listItemClass, Supplier<W> supplier, BiConsumer<D, W> configurator) {
-		this(data, supplier, configurator);
-	}
 	
 	@Override
 	public void paintBackground(int x, int y, int mouseX, int mouseY) {

@@ -24,7 +24,7 @@ public class ConfigGui extends LightweightGuiDescription {
 				LibGuiClient.saveConfig(LibGuiClient.config);
 			}
 		};
-		darkmodeButton.setToggle(LibGuiClient.config.darkMode);
+		darkmodeButton.setOn(LibGuiClient.config.darkMode);
 		root.add(darkmodeButton, 0, 2, 6, 1);
 		
 		WTextField testField = new WTextField();

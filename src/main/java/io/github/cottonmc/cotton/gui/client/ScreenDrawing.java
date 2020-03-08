@@ -356,15 +356,6 @@ public class ScreenDrawing {
 		MinecraftClient.getInstance().textRenderer.draw(s, x, y, color);
 	}
 
-	/**
-	 * @deprecated for removal; please use {@link #drawStringWithShadow(String, Alignment, int, int, int, int)}
-	 */
-	@Deprecated
-	public static void drawCenteredWithShadow(String s, int x, int y, int color) {
-		TextRenderer render = MinecraftClient.getInstance().getFontManager().getTextRenderer(MinecraftClient.DEFAULT_TEXT_RENDERER_ID);
-		render.drawWithShadow(s, (float)(x - render.getStringWidth(s) / 2), (float)y, color);
-	}
-
 	public static int colorAtOpacity(int opaque, float opacity) {
 		if (opacity<0.0f) opacity=0.0f;
 		if (opacity>1.0f) opacity=1.0f;

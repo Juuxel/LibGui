@@ -79,8 +79,6 @@ public class CottonClientScreen extends Screen implements TextHoverRendererScree
 		if (description!=null) {
 			WPanel root = description.getRootPanel();
 			if (root!=null) {
-				root.paintForeground(left, top, mouseX, mouseY);
-				
 				WWidget hitChild = root.hit(mouseX-left, mouseY-top);
 				if (hitChild!=null) hitChild.renderTooltip(left, top, mouseX-left, mouseY-top);
 			}
